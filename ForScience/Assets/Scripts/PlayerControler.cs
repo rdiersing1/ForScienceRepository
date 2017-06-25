@@ -7,8 +7,9 @@ public class PlayerControler : MonoBehaviour {
 	public float speed;
 	public float jumpForce;
 	public Collider2D ground;
-	public bool isJumping;
-	public bool wasJumping;
+
+	private bool isJumping;
+	private bool wasJumping;
 
 	private Rigidbody2D playerRB;
 
