@@ -14,6 +14,7 @@ public class PhysicsEngine : MonoBehaviour {
     public float minGroundNormalY = 0.65f;
 
     protected bool isGrounded;
+    protected Vector2 targetVelocity;
     protected Vector2 groundNormal;
     protected Vector2 velocity;
     protected Rigidbody2D rb2D;
@@ -45,11 +46,11 @@ public class PhysicsEngine : MonoBehaviour {
         isGrounded = false;
         velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
         Vector2 deltaPosition = velocity * Time.deltaTime;
-        Vector2 move = Vector2.up * deltaPosition.y;
-        Movement (move, true);
+        Vector2 move = Vector2.up * deltaPosition.y + targetVelocity;
+        Movement (move);
     }
 
-    private void Movement(Vector2 move, bool yMovement) {
+    private void Movement(Vector2 move) {
 
         float distance = move.magnitude;
 
@@ -67,7 +68,7 @@ public class PhysicsEngine : MonoBehaviour {
                 if (currentNormal.y > minGroundNormalY) {               // The normal vector is a unit vector so this is basically comparing the angles of the two
                                                                         // sin(theta) = currentNormal.y where theta is the angle between the ground normal and x axis
                     isGrounded = true;
-                    if (yMovement) {
+                    if (move.y != 0) {
                         groundNormal = currentNormal;
                         currentNormal.x = 0;
                     }
