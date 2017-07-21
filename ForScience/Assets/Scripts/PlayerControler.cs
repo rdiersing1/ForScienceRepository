@@ -21,10 +21,10 @@ public class PlayerControler : PhysicsEngine {
 
         if (Input.GetButtonDown("Jump") && isGrounded) {
             Movement(new Vector2(0f, jumpHeight), true);        // Movement() is great for telliporting! 
-            velocity.y = jumpInitialSpeed;                      // Velocity is great for movin vertically
+            velocity.y = jumpInitialSpeed;                      // Velocity is great for when you want to set velocity for more than a frame
         }
 
-        targetVelocity = move;                                  // Target velocity is great for moving horizontally
+        targetVelocity = move;                                  // Target velocity is good for when you want set velocity for a frame
     }
 
 }

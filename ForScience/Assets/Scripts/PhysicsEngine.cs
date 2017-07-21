@@ -14,9 +14,9 @@ public class PhysicsEngine : MonoBehaviour {
     public float minGroundNormalY = 0.65f;
 
     protected bool isGrounded;
-    protected Vector2 targetVelocity;
+    protected Vector2 targetVelocity;                   // Use this in a child class to set the velocity for that frame
     protected Vector2 groundNormal;
-    protected Vector2 velocity;
+    protected Vector2 velocity;                         // Use this in a child class to set the velocity in general
     protected Rigidbody2D rb2D;
     protected ContactFilter2D contactFilter;
     protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
@@ -61,7 +61,8 @@ public class PhysicsEngine : MonoBehaviour {
         Movement(move, true);
     }
 
-    public void Movement(Vector2 move, bool isYMovement) {
+    // Use this in a child class to teleport
+    protected void Movement(Vector2 move, bool isYMovement) {
 
         float distance = move.magnitude;
 
