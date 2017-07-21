@@ -10,12 +10,12 @@ public class PlayerControler : PhysicsEngine {
 
 	private Rigidbody2D playerRB;
 
-	// Use this for initialization
+	// Start is called during initilization 
 	void Start () {
         
 	}
 
-    // This is called during update and is what you should use to compute the velocity
+    // ComputeVelocity is called during update and is what you should use to compute the velocity
     protected override void ComputeVelocity() {
         Vector2 move = new Vector2(runSpeed, 0f);
 
@@ -25,6 +25,12 @@ public class PlayerControler : PhysicsEngine {
         }
 
         targetVelocity = move;                                  // Target velocity is good for when you want set velocity for a frame
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.CompareTag("Trap")) {                     // Activates when the player hits a trap
+            print("The player has hit a trap");
+        }
     }
 
 }
