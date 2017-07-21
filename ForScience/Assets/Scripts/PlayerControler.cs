@@ -14,7 +14,7 @@ public class PlayerControler : PhysicsEngine {
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
         targetVelocity = Vector2.right * speed;
     }
 		
