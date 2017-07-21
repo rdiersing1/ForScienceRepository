@@ -39,6 +39,11 @@ public class PhysicsEngine : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         targetVelocity = Vector2.zero;
+        ComputeVelocity();
+    }
+
+    protected virtual void ComputeVelocity() {
+
     }
 
     // FixedUpdate is called on a constant interval
@@ -56,7 +61,7 @@ public class PhysicsEngine : MonoBehaviour {
         Movement(move, true);
     }
 
-    private void Movement(Vector2 move, bool isYMovement) {
+    public void Movement(Vector2 move, bool isYMovement) {
 
         float distance = move.magnitude;
 

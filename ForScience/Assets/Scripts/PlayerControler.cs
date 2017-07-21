@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerControler : PhysicsEngine {
 
-	public float speed;
+	public float runSpeed;
+    public float jumpInitialSpeed;
+    public float jumpHeight;
 
 	private Rigidbody2D playerRB;
 
@@ -12,10 +14,17 @@ public class PlayerControler : PhysicsEngine {
 	void Start () {
         
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        targetVelocity = Vector2.right * speed;
+
+    // This is called during update and is what you should use to compute the velocity
+    protected override void ComputeVelocity() {
+        Vector2 move = new Vector2(runSpeed, 0f);
+
+        if (Input.GetButtonDown("Jump") && isGrounded) {
+            Movement(new Vector2(0f, jumpHeight), true);
+            velocity.y = jumpInitialSpeed;
+        }
+
+        targetVelocity = move;
     }
-		
+
 }
