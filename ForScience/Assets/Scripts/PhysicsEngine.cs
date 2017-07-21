@@ -33,24 +33,30 @@ public class PhysicsEngine : MonoBehaviour {
     void Start () {
         contactFilter.useTriggers = false;
         contactFilter.SetLayerMask (Physics2D.GetLayerCollisionMask (gameObject.layer));
+        contactFilter.useLayerMask = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        targetVelocity = Vector2.zero;
+    }
 
     // FixedUpdate is called on a constant interval
     private void FixedUpdate() {
 
         isGrounded = false;
         velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
+        velocity.x = targetVelocity.x;
+
         Vector2 deltaPosition = velocity * Time.deltaTime;
-        Vector2 move = Vector2.up * deltaPosition.y + targetVelocity;
-        Movement (move);
+        Vector2 moveAlongGround = new Vector2(groundNormal.y, -groundNormal.x);
+        Vector2 move = moveAlongGround * deltaPosition.x;
+        Movement(move, false);                                          // This calls movement for both x and y movement
+        move = Vector2.up * deltaPosition.y;
+        Movement(move, true);
     }
 
-    private void Movement(Vector2 move) {
+    private void Movement(Vector2 move, bool isYMovement) {
 
         float distance = move.magnitude;
 
@@ -68,7 +74,7 @@ public class PhysicsEngine : MonoBehaviour {
                 if (currentNormal.y > minGroundNormalY) {               // The normal vector is a unit vector so this is basically comparing the angles of the two
                                                                         // sin(theta) = currentNormal.y where theta is the angle between the ground normal and x axis
                     isGrounded = true;
-                    if (move.y != 0) {
+                    if (isYMovement) {
                         groundNormal = currentNormal;
                         currentNormal.x = 0;
                     }
@@ -84,6 +90,6 @@ public class PhysicsEngine : MonoBehaviour {
             }
         }
 
-        rb2D.position += move.normalized * distance;
+        rb2D.position = rb2D.position + move.normalized * distance;
     }
 }
