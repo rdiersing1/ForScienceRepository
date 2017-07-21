@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/* 
+    Much of this code was derived from a unity tutorial:
+    https://unity3d.com/learn/tutorials/topics/2d-game-creation/horizontal-movement?playlist=17093
+     */
+
 public class PhysicsEngine : MonoBehaviour {
 
     public float gravityModifier = 1f;
@@ -55,11 +61,11 @@ public class PhysicsEngine : MonoBehaviour {
                 hitBufferList.Add (hitBuffer[i]);
             }
 
-            for (int i = 0; i < hitBufferList.Count; ++i) {
+            for (int i = 0; i < hitBufferList.Count; ++i) {             // This will only be entered with objects that your colliding with
 
                 Vector2 currentNormal = hitBufferList[i].normal;
-                if (currentNormal.y > minGroundNormalY) {
-
+                if (currentNormal.y > minGroundNormalY) {               // The normal vector is a unit vector so this is basically comparing the angles of the two
+                                                                        // sin(theta) = currentNormal.y where theta is the angle between the ground normal and x axis
                     isGrounded = true;
                     if (yMovement) {
                         groundNormal = currentNormal;
@@ -69,7 +75,7 @@ public class PhysicsEngine : MonoBehaviour {
 
                 float projection = Vector2.Dot(velocity, currentNormal);
                 if (projection < 0) {
-                    velocity = velocity - projection * currentNormal;
+                    velocity = velocity - projection * currentNormal;       // So you dont walk into walls when walking up a slope
                 }
 
                 float modifiedDistance = hitBufferList[i].distance - shellRadius;
