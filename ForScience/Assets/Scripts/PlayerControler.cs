@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerControler : PhysicsEngine {
 
@@ -29,7 +30,7 @@ public class PlayerControler : PhysicsEngine {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.CompareTag("Trap")) {                     // Activates when the player hits a trap
-            print("The player has hit a trap");
+            SceneManager.LoadScene("DeathMenu");
         }
     }
 
