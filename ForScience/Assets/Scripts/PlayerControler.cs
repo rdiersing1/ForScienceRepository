@@ -29,7 +29,7 @@ public class PlayerControler : PhysicsEngine {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("Trap")) {                     // Activates when the player hits a trap
+        if (collision.CompareTag("Trap") || collision.CompareTag("Monster")) {     // Activates when the player hits a trap or monster
             SceneManager.LoadScene("DeathMenu");
         }
     }
