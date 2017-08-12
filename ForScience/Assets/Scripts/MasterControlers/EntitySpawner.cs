@@ -14,6 +14,7 @@ public class EntitySpawner : MonoBehaviour {
     ScoreCounter sc;
     
     private GameObject monsterPrefab;
+    private GameObject flyingMonsterPrefab;
     private GameObject obsticalPrefab;
     private GameObject acidPrefab;
     private List<float> traps = new List<float>();
@@ -21,8 +22,9 @@ public class EntitySpawner : MonoBehaviour {
 	void Start () {
         sc = master.GetComponent<ScoreCounter>();
         monsterPrefab = Resources.Load("Monster") as GameObject;
-        obsticalPrefab = Resources.Load("obstical") as GameObject;
-        acidPrefab = Resources.Load("acid") as GameObject;
+        flyingMonsterPrefab = Resources.Load("FlyingMonster") as GameObject;
+        obsticalPrefab = Resources.Load("Obstical") as GameObject;
+        acidPrefab = Resources.Load("Acid") as GameObject;
 	}
 	
 	void Update () {
@@ -36,14 +38,15 @@ public class EntitySpawner : MonoBehaviour {
     private void spawnChunck(float location) {
         int score = sc.getScore();
 
-        // Assigns the number of monsters to spawn to an event from the pdf f(x) = x/(c * int((1/c) * s) ds from 0 to max)
+        // Assigns the number of monsters to spawn to an event from linear pdf
         int maxNumMonsters = Mathf.CeilToInt(((Mathf.Sqrt(score) / 5) + 2));
-        float M = 0.5f * Mathf.Pow(maxNumMonsters, 2);
-        float rand = Random.Range(0.0f, 1.0f);
-        int numMonstersToSpawn = Mathf.CeilToInt(Mathf.Sqrt(2 * M * rand));
-
-        // Spawn Monsters
+        int numMonstersToSpawn = linearProbabilityDensityEvent(maxNumMonsters);
         spawner(location, numMonstersToSpawn, monsterPrefab);
+
+        // Spawn flying monsters using spawn monsters tecnique
+        int maxNumFlyingMonsters = maxNumMonsters / 2;
+        int numFlyingMonstersToSpawn = linearProbabilityDensityEvent(maxNumFlyingMonsters);
+        spawner(location, numFlyingMonstersToSpawn, flyingMonsterPrefab);
 
         // spawn obsticals 
         int numObsticalsToSpawn = Mathf.FloorToInt(Random.Range(0, 3));
@@ -90,5 +93,13 @@ public class EntitySpawner : MonoBehaviour {
             }
         }
         return true;
+    }
+
+    // Creates an event (int) from a linear probability density function from the interval [0, 1]
+    // Note: there exists a unique such probability density function: f(x) = x/(c * Integral((1/c) * s) ds from 0 to max)
+    private int linearProbabilityDensityEvent(int max) {
+        float M = 0.5f * Mathf.Pow(max, 2);
+        float rand = Random.Range(0.0f, 1.0f);
+        return Mathf.CeilToInt(Mathf.Sqrt(2 * M * rand)); 
     }
 }

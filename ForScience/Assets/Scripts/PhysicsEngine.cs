@@ -54,8 +54,7 @@ public class PhysicsEngine : MonoBehaviour {
         velocity.x = targetVelocity.x;
 
         Vector2 deltaPosition = velocity * Time.deltaTime;
-        Vector2 moveAlongGround = new Vector2(groundNormal.y, -groundNormal.x);
-        Vector2 move = moveAlongGround * deltaPosition.x;
+        Vector2 move = new Vector2(deltaPosition.x, 0.0f);
         Movement(move, false);                                          // This calls movement for both x and y movement
         move = Vector2.up * deltaPosition.y;
         Movement(move, true);
@@ -84,11 +83,6 @@ public class PhysicsEngine : MonoBehaviour {
                         groundNormal = currentNormal;
                         currentNormal.x = 0;
                     }
-                }
-
-                float projection = Vector2.Dot(velocity, currentNormal);
-                if (projection < 0) {
-                    velocity = velocity - projection * currentNormal;       // So you dont walk into walls when walking up a slope
                 }
 
                 float modifiedDistance = hitBufferList[i].distance - shellRadius;
