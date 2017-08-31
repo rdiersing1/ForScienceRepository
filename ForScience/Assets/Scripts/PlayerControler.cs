@@ -11,11 +11,6 @@ public class PlayerControler : PhysicsEngine {
 
 	private Rigidbody2D playerRB;
 
-	// Start is called during initilization 
-	void Start () {
-        
-	}
-
     // ComputeVelocity is called during update and is what you should use to compute the velocity
     protected override void ComputeVelocity() {
         targetVelocity = new Vector2(runSpeed, 0f);
@@ -31,5 +26,4 @@ public class PlayerControler : PhysicsEngine {
             SceneManager.LoadScene("DeathMenu");
         }
     }
-
 }
