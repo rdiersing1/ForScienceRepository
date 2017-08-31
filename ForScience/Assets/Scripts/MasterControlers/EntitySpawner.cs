@@ -51,12 +51,10 @@ public class EntitySpawner : MonoBehaviour {
         // spawn obsticals 
         int numObsticalsToSpawn = Mathf.FloorToInt(Random.Range(0, 3));
         spawner(location, numObsticalsToSpawn, obsticalPrefab);
-        print("Attempting obsticals: " + numObsticalsToSpawn);
 
         // spawn acids
         int numAcidToSpawn = Mathf.FloorToInt(Random.Range(0, 2));
         spawner(location, numAcidToSpawn, acidPrefab);
-        print("Attempting acids: " + numAcidToSpawn);
     }
 
     // Spawns certian number of objects, does not spawn an "impossible object combo"
@@ -67,8 +65,6 @@ public class EntitySpawner : MonoBehaviour {
                 if (validTrapPos(objPosX)) {
                     traps.Add(objPosX);
                     spawnObject(objPosX, objectPrefab);
-                } else {
-                    print("invalid trap pos at: " + objPosX);
                 }
             }
             else {
