@@ -20,4 +20,4 @@ than ammo, in which case you will have to use your alternate
 
 wepon! This wepon teleports monsters into the future so you 
 
-can worry about them once you have gotten more ammo...
+can worry about them once you have gotten more ammo
